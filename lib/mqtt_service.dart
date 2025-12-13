@@ -10,12 +10,12 @@ class MqttService with ChangeNotifier {
   SensorData? latest;
 
   Future<void> connect() async {
-    client = MqttServerClient('broker.mqtt-dashboard.com', 'calmreminder');
+    client = MqttServerClient('broker.mqtt-dashboard.com', 'flutter_client_calmreminder_02');
     client.port = 1883;
     client.keepAlivePeriod = 60;
 
     final msg = MqttConnectMessage()
-        .withClientIdentifier("calmreminder_A7")
+        .withClientIdentifier("calmreminder_monitor_2")
         .startClean()
         .keepAliveFor(60);
 
