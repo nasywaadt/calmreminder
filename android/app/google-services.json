@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "433084305338",
+    "project_id": "calmreminder",
+    "storage_bucket": "calmreminder.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433084305338:android:b1cc5ce93235288ed15783",
+        "android_client_info": {
+          "package_name": "com.example.calmreminder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpyF-eG84_hEtuDljr-Eo0r4loZwoEarQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
