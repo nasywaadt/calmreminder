@@ -2,6 +2,7 @@ import 'package:calmreminder/services/firebase_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../core/models/admin_message.dart';
+import 'package:calmreminder/services/public_api_service.dart';
 
 class RelaxationGuidesPage extends StatelessWidget {
   final String stressLevel;
@@ -192,6 +193,73 @@ class RelaxationGuidesPage extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
+                            ),
+
+                            const SizedBox(height: 20),
+
+                            // --- Public API : Daily Advice ---
+                            FutureBuilder<String>(
+                              future: PublicApiService().fetchAdvice(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return const Padding(
+                                    padding: EdgeInsets.all(16),
+                                    child: CircularProgressIndicator(color: Colors.white),
+                                  );
+                                }
+
+                                if (snapshot.hasError) {
+                                  return Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: const Text(
+                                      'Failed to load public advice',
+                                      style: TextStyle(color: Colors.white70),
+                                    ),
+                                  );
+                                }
+
+                                return Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.2),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(color: Colors.white.withOpacity(0.3)),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const Row(
+                                        children: [
+                                          Icon(Icons.public, color: Colors.white),
+                                          SizedBox(width: 8),
+                                          Text(
+                                            'Daily Public Advice',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 12),
+                                      Text(
+                                        snapshot.data!,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          height: 1.5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             ),
 
                             const SizedBox(height: 30),

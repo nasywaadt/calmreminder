@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'user_monitoring_page.dart';
 import 'analytics_page.dart';
 import 'send_message_page.dart';
+import 'package:calmreminder/pages/about_page.dart';
 
 class AdminDashboardPage extends StatefulWidget {
   const AdminDashboardPage({super.key});
@@ -172,17 +173,43 @@ class _AdminDashboardPageState extends State<AdminDashboardPage> {
             ),
           ],
         ),
-        IconButton(
-          icon: const Icon(Icons.logout, color: Colors.white),
-          onPressed: () async {
-            await FirebaseAuth.instance.signOut();
-            if (mounted) {
-              Navigator.pushReplacementNamed(context, '/login');
-            }
-          },
-        ),
-      ],
-    );
+        // KANAN: Info + Logout (DIGABUNG)
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            padding: EdgeInsets.zero,
+            visualDensity: VisualDensity.compact,
+            constraints: const BoxConstraints(),
+            icon: const Icon(Icons.info_outline, color: Colors.white),
+            tooltip: 'Tentang Aplikasi',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const AboutPage(),
+                ),
+              );
+            },
+          ),
+          const SizedBox(width: 4),
+          IconButton(
+            padding: EdgeInsets.zero,
+            visualDensity: VisualDensity.compact,
+            constraints: const BoxConstraints(),
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: 'Logout',
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              if (mounted) {
+                Navigator.pushReplacementNamed(context, '/login');
+              }
+            },
+          ),
+        ],
+      ),
+    ],
+  );
   }
 
   Widget _buildQuickStats() {

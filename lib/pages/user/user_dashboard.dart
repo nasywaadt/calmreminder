@@ -11,6 +11,7 @@ import 'dart:math' as math;
 import 'relaxation_guides_page.dart';
 import 'mood_journal_page.dart';
 import 'my_progress_page.dart';
+import 'package:calmreminder/pages/about_page.dart';
 
 // Data history manager untuk EKG
 class DataHistory extends ChangeNotifier {
@@ -220,28 +221,71 @@ class _DashboardPageState extends State<DashboardPage> with TickerProviderStateM
   }
 
   Widget _buildHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Opacity(opacity: 0, child: IconButton(onPressed: null, icon: Icon(Icons.logout))),
-        Column(
-          children: [
-            Container(
-              width: 70, height: 70,
-              decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-              child: const Center(child: Text('💜', style: TextStyle(fontSize: 35))),
+  return Row(
+    children: [
+      // === KIRI KOSONG (agar judul tetap tengah secara visual) ===
+      const SizedBox(width: 110),
+
+      // === TENGAH: LOGO & JUDUL ===
+      Column(
+        children: [
+          Container(
+            width: 70,
+            height: 70,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
             ),
-            const SizedBox(height: 8),
-            const Text('Calm Reminder', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
-          ],
-        ),
-        IconButton(
-          icon: const Icon(Icons.logout, color: Colors.white),
-          onPressed: () => _showLogoutDialog(context),
-        ),
-      ],
-    );
-  }
+            child: const Center(
+              child: Text('💜', style: TextStyle(fontSize: 35)),
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Calm Reminder',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+
+      const Spacer(), // 🔑 PEMISAH UTAMA
+
+      // === KANAN: ABOUT + LOGOUT (MEPET) ===
+      Row(
+        children: [
+          IconButton(
+            padding: EdgeInsets.zero,
+            visualDensity: VisualDensity.compact,
+            constraints: const BoxConstraints(),
+            icon: const Icon(Icons.info_outline, color: Colors.white),
+            tooltip: 'Tentang Aplikasi',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const AboutPage(),
+                ),
+              );
+            },
+          ),
+          const SizedBox(width: 6),
+          IconButton(
+            padding: EdgeInsets.zero,
+            visualDensity: VisualDensity.compact,
+            constraints: const BoxConstraints(),
+            icon: const Icon(Icons.logout, color: Colors.white),
+            tooltip: 'Logout',
+            onPressed: () => _showLogoutDialog(context),
+          ),
+        ],
+      ),
+    ],
+  );
+}
 
   void _showLogoutDialog(BuildContext context) {
     showDialog(
